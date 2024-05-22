@@ -1,0 +1,2 @@
+This is a placeholder file. Whenever I would add a folder to the empty pages folder, 
+it would make every subsequent folder a child of the latest added folder.
