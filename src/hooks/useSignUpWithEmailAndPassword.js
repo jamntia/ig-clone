@@ -19,9 +19,11 @@ const useSignUpWithEmailAndPassword = () => {
 
         try {
             const newUser = await createUserWithEmailAndPassword(inputs.email, inputs.password)
-            console.log(inputs.email)
+           
+            /* console.log(inputs.email)
             console.log(inputs.password)
-            console.log("Created a new User")
+            console.log("Created a new User") */
+            
             if (!newUser && error) {
                 showToast("Error", error.message, "error")
                 return
@@ -40,12 +42,14 @@ const useSignUpWithEmailAndPassword = () => {
                     posts: [],
                     createdAt: Date.now()
                 }
-                console.log("Setting Doc")
+                
+                /* console.log("Setting Doc")*/
+
                 await setDoc(doc(firestore, "users", newUser.user.uid), userDoc);
                 localStorage.setItem("user-info", JSON.stringify(userDoc))
             } 
         } catch (error) {
-            console.log(error.message)
+            /* console.log(error.message) */
             showToast("Error", error.message, "error")
         }
     }
