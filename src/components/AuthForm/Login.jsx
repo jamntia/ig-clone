@@ -1,4 +1,5 @@
-import { Input, Button } from "@chakra-ui/react"
+import { Input, Button, InputGroup, InputRightElement } from "@chakra-ui/react"
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
 import { useState } from "react"
 import useLogin from "../../hooks/useLogin"
 import { Alert, AlertIcon } from "@chakra-ui/react"
@@ -8,6 +9,7 @@ const Login = () => {
         email: "",
         password: "",
     })
+    const [showPassword, setShowPassword] = useState(false)
     const { loading, error, login } = useLogin()
     return (
         <>
@@ -19,14 +21,21 @@ const Login = () => {
                 size={"sm"}
                 onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
             />
-            <Input
-                placeholder='Password'
-                fontSize={14}
-                type="password"
-                value={inputs.password}
-                size={"sm"}
-                onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
-            />
+            <InputGroup>
+                <Input
+                    placeholder='Password'
+                    fontSize={14}
+                    type={showPassword ? "text" : "password"}
+                    value={inputs.password}
+                    size={"sm"}
+                    onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
+                />
+                <InputRightElement h={"full"}>
+                    <Button variant={"ghost"} size={"sm"} onClick={() => setShowPassword(!showPassword)}>
+                        {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    </Button>
+                </InputRightElement>
+            </InputGroup>
 
             {error && (
                 <Alert status='error' fontSize={13} p={2} borderRadius={4}>
