@@ -18,12 +18,10 @@ const useFollowUser = (userId) => {
         try {
             const currentUserRef = doc(firestore, "users", authUser.uid)
             const userToFollowOrUnfollowRef = doc(firestore, "users", userId)
-            console.log("1")
 
             await updateDoc(currentUserRef, {
                 following: isFollowing ? arrayRemove(userId) : arrayUnion(userId)
             })
-            console.log("1")
 
 
             await updateDoc(userToFollowOrUnfollowRef, {
@@ -36,6 +34,7 @@ const useFollowUser = (userId) => {
                     ...authUser,
                     following: authUser.following.filter(uid => uid !== userId)
                 })
+                if (userProfile)
                 setUserProfile({
                     ...userProfile,
                     followers: userProfile.followers.filter(uid => uid !== authUser.uid)
@@ -53,6 +52,7 @@ const useFollowUser = (userId) => {
                     ...authUser,
                     following: [...authUser.following, userId]
                 })
+                if(userProfile)
                 setUserProfile({
                     ...userProfile,
                     followers: [...userProfile.followers, authUser.uid]
