@@ -1,6 +1,8 @@
-import { Box, Flex, Tooltip, useDisclosure, Modal, ModalContent, ModalOverlay, ModalHeader, ModalCloseButton, ModalBody, Button, FormControl, 
-FormLabel, Input } from "@chakra-ui/react";
-import { SearchLogo } from "../../assets/constants"; 
+import {
+    Box, Flex, Tooltip, useDisclosure, Modal, ModalContent, ModalOverlay, ModalHeader, ModalCloseButton, ModalBody, Button, FormControl,
+    FormLabel, Input
+} from "@chakra-ui/react";
+import { SearchLogo } from "../../assets/constants";
 import useSearchUser from "../../hooks/useSearchUser";
 import { useRef } from "react";
 import SuggestedUser from "../SuggestedUsers/SuggestedUser";
@@ -8,7 +10,7 @@ import SuggestedUser from "../SuggestedUsers/SuggestedUser";
 
 const Search = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const {user, isLoading, getUserProfile, setUser} = useSearchUser()
+    const { user, isLoading, getUserProfile, setUser } = useSearchUser()
     const searchRef = useRef(null)
     const handleSearchUser = (e) => {
         e.preventDefault()
@@ -42,9 +44,9 @@ const Search = () => {
             </Tooltip>
 
             <Modal
-            isOpen={isOpen}
-            onClose={onClose}
-            motionPreset="slideInLeft"
+                isOpen={isOpen}
+                onClose={onClose}
+                motionPreset="slideInLeft"
             >
                 <ModalOverlay />
                 <ModalContent bg={"black"} border={"1px solid gray"} maxW={"400px"}>
@@ -53,8 +55,8 @@ const Search = () => {
                     <ModalBody pb={6}>
                         <form onSubmit={handleSearchUser}>
                             <FormControl>
-                                    < FormLabel>Username</FormLabel>
-                                    <Input placeholder="asaprogrammer" ref={searchRef} />
+                                < FormLabel>Username</FormLabel>
+                                <Input placeholder="asaprogrammer" ref={searchRef} />
                             </FormControl>
 
                             <Flex w={"full"} justifyContent={"flex-end"}>

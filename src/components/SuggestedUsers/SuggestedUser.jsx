@@ -3,14 +3,14 @@ import useFollowUser from "../../hooks/useFollowUser"
 import useAuthStore from "../../store/authStore"
 
 const SuggestedUser = ({ user, setUser }) => {
-    const {isFollowing, isUpdating, handleFollowUser} = useFollowUser(user.uid)
+    const { isFollowing, isUpdating, handleFollowUser } = useFollowUser(user.uid)
     const authUser = useAuthStore((state) => state.user)
     const onFollowUser = async () => {
         await handleFollowUser()
         setUser({
-        ...user,
-        followers: isFollowing ? user.followers.filter((follower) => follower.uid !== authUser.uid)
-        : [...user.followers, authUser]
+            ...user,
+            followers: isFollowing ? user.followers.filter((follower) => follower.uid !== authUser.uid)
+                : [...user.followers, authUser]
         })
     }
     return (
@@ -28,20 +28,20 @@ const SuggestedUser = ({ user, setUser }) => {
 
             </Flex>
             {authUser.uid !== user.uid && (
-            <Button
-                fontSize={13}
-                bg={"transparent"}
-                p={0}
-                h={"max-content"}
-                fontWeight={"medium"}
-                color={"blue.400"}
-                cursor={"pointer"}
-                _hover={{ color: "white" }}
-                onClick={onFollowUser}
-                isLoading={isUpdating}
-            >
-                {isFollowing ? "Unfollow" : "Follow"}
-            </Button>)}
+                <Button
+                    fontSize={13}
+                    bg={"transparent"}
+                    p={0}
+                    h={"max-content"}
+                    fontWeight={"medium"}
+                    color={"blue.400"}
+                    cursor={"pointer"}
+                    _hover={{ color: "white" }}
+                    onClick={onFollowUser}
+                    isLoading={isUpdating}
+                >
+                    {isFollowing ? "Unfollow" : "Follow"}
+                </Button>)}
 
 
 

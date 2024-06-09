@@ -8,7 +8,7 @@ const ProfileHeader = () => {
     const { userProfile } = useUserProfileStore()
     const authUser = useAuthStore((state) => state.user)
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const {isFollowing, isUpdating, handleFollowUser} = useFollowUser(userProfile?.uid)
+    const { isFollowing, isUpdating, handleFollowUser } = useFollowUser(userProfile?.uid)
 
     const visitingOwnProfileandAuth = authUser && authUser.username === userProfile.username
     const visitingAnotherProfileAndAuth = authUser && authUser.username !== userProfile.username
@@ -55,8 +55,8 @@ const ProfileHeader = () => {
                         justifyContent={"center"}
                     >
                         <Button bg={"blue.500"} color={"white"} _hover={{ bg: "blue.600" }} size={{ base: "xs", md: "sm" }}
-                        onClick={handleFollowUser}
-                        isLoading={isUpdating}
+                            onClick={handleFollowUser}
+                            isLoading={isUpdating}
                         >
                             {isFollowing ? "Unfollow" : "Follow"}
                         </Button>
