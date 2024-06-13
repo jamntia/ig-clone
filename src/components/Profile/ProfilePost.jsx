@@ -10,11 +10,48 @@ import Comment from "../Comment/Comment"
 import PostFooter from "../FeedPosts/PostFooter"
 import useUserProfileStore from "../../store/userProfileStore"
 import useAuthStore from "../../store/authStore"
+import useShowToast from "../../hooks/useShowToast"
+import { useState } from "react"
+import { firestore, storage } from "../../firebase/firebase"
+import { deleteObject, ref } from "firebase/storage"
+import { deleteDoc, doc, updateDoc, arrayRemove } from "firebase/firestore"
+import usePostStore from "../../store/postStore"
 
 const ProfilePost = ({ post }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const userProfile = useUserProfileStore((state) => state.userProfile)
     const authUser = useAuthStore((state) => state.user)
+    const showToast = useShowToast()
+    const [isDeleting, setIsDeleting] = useState(false)
+    const deletePost = usePostStore((state) => state.deletePost)
+    const decrementPostCount = useUserProfileStore((state) => state.deletePost)
+
+    const handleDeletPost = async () => {
+        if (!window.confirm("Are you sure you want to delete this post?")) return
+        if (isDeleting) return
+
+        try {
+            const imageRef = ref(storage, `posts/${post.id}`)
+            await deleteObject(imageRef)
+            const userRef = doc(firestore, "users", authUser.uid)
+            await deleteDoc(doc(firestore, "posts", post.id))
+
+            await updateDoc(userRef, {
+                posts: arrayRemove(post.id)
+            })
+
+            deletePost(post.id)
+            decrementPostCount(post.id)
+            showToast("Success", "Post deleted successfully", "success")
+
+        } catch (error) {
+            showToast("Error", error.message, "error")
+        }
+        finally {
+            setIsDeleting(false)
+        }
+    }
+
     return (
         <>
             <GridItem
@@ -44,13 +81,13 @@ const ProfilePost = ({ post }) => {
                         <Flex>
                             <AiFillHeart size={20} />
                             <Text fontWeight={"bold"} ml={2}>
-                                7
+                                {post.likes.length}
                             </Text>
                         </Flex>
                         <Flex>
                             <FaComment size={20} />
                             <Text fontWeight={"bold"} ml={2}>
-                                7
+                                {post.comments.length}
                             </Text>
                         </Flex>
                     </Flex>
@@ -95,7 +132,10 @@ const ProfilePost = ({ post }) => {
                                     </Flex>
 
                                     {authUser?.uid == userProfile.uid && (
-                                        <Button size={"sm"} bg={"transparent"} _hover={{ bg: "whiteAlpha.300", color: "red.600" }} borderRadius={4} p={1}>
+                                        <Button size={"sm"} bg={"transparent"} _hover={{ bg: "whiteAlpha.300", color: "red.600" }} borderRadius={4} p={1}
+                                            onClick={handleDeletPost}
+                                            isLoading={isDeleting}
+                                        >
                                             <MdDelete size={20} cursor={"pointer"} />
                                         </Button>
                                     )}
