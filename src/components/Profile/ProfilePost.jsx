@@ -16,6 +16,7 @@ import { firestore, storage } from "../../firebase/firebase"
 import { deleteObject, ref } from "firebase/storage"
 import { deleteDoc, doc, updateDoc, arrayRemove } from "firebase/firestore"
 import usePostStore from "../../store/postStore"
+import Caption from "../Comment/Caption"
 
 const ProfilePost = ({ post }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -125,9 +126,9 @@ const ProfilePost = ({ post }) => {
                             <Flex flex={1} flexDir={"column"} px={10} display={{ base: "none", md: "flex" }}>
                                 <Flex alignItems={"center"} justifyContent={"space-between"}>
                                     <Flex alignItems={"center"} gap={4}>
-                                        <Avatar src="/profilepic.png" size={"sm"} name="As a Programmer" />
+                                        <Avatar src={userProfile.profilePicURL} size={"sm"} name={userProfile.fullName} />
                                         <Text fontWeight={"bold"} fontSize={12}>
-                                            asaprogrammer
+                                            {userProfile.username}
                                         </Text>
                                     </Flex>
 
@@ -143,6 +144,11 @@ const ProfilePost = ({ post }) => {
                                 <Divider my={4} bg={"gray.500"} />
 
                                 <VStack w={"full"} alignItems={"start"} maxH={"350px"} overflowY={"auto"}>
+                                    {/* Caption  */}
+                                    {post.caption && <Caption post={post} />}
+
+
+                                    {/* Comments */}
                                     {post.comments.map(comment => (
                                         <Comment key={comment.id} comment={comment} />
                                     ))}
