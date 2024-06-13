@@ -7,22 +7,22 @@ const Comment = ({ comment }) => {
     if (isLoading) return <CommentSkeleton />
 
     return (
-        <Flex gap={4}>
+        <Flex alignItems="flex-start" gap={4}>
             <Link to={`/${userProfile.username}`}>
-                <Avatar src={userProfile.profilePicURL} size={"sm"} />
+                <Avatar src={userProfile.profilePicURL} size="sm" />
             </Link>
-            <Flex direction={"column"}>
-                <Flex gap={2} alignItems={"center"}>
+            <Flex direction="column" flex="1">
+                <Flex alignItems="baseline" gap={2}>
                     <Link to={`/${userProfile.username}`}>
-                        <Text fontWeight={"bold"} fontSize={12}>
+                        <Text fontWeight="bold" fontSize="sm">
                             {userProfile.username}
                         </Text>
                     </Link>
-                    <Text fontSize={14}>
+                    <Text fontSize="sm">
                         {comment.comment}
                     </Text>
                 </Flex>
-                <Text color={"gray"} fontSize={12}>
+                <Text color="gray" fontSize="xs">
                     {timeAgo(comment.createdAt)}
                 </Text>
             </Flex>
