@@ -140,7 +140,8 @@ function useCreatePost() {
 
             newPost.imageURL = downloadURL;
             createPost({ ...newPost, id: postDocRef.id })
-            addPost({ ...newPost, id: postDocRef.id })
+
+            if (pathname !== "/") addPost({ ...newPost, id: postDocRef.id })
 
             showToast("Success", "Your post has been successfully created", "success")
 
