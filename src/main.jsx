@@ -20,7 +20,7 @@ const config = {
   // Change to light when finished
   initialColorMode: 'dark',
   // Change to true when finished
-  useSystemColorMode: false,
+  useSystemColorMode: true,
 }
 
 const theme = extendTheme({ config, styles })
